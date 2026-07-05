@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"awmcli/internal/editor"
+	"github.com/pbk-b/awm/internal/editor"
 )
 
 func cmdOpen(args []string) error {

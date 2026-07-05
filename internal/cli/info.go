@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"awmcli/internal/workspace"
+	"github.com/pbk-b/awm/internal/workspace"
 )
 
 func cmdInfo(args []string) error {

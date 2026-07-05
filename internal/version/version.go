@@ -6,7 +6,7 @@ const devBase = "v0.0.1"
 
 // Values can be injected by release builds:
 //
-//   go build -ldflags "-X awmcli/internal/version.Tag=v1.2.3 -X awmcli/internal/version.Commit=abcdef123456"
+//	go build -ldflags "-X github.com/pbk-b/awm/internal/version.Tag=v1.2.3 -X github.com/pbk-b/awm/internal/version.Commit=abcdef123456"
 //
 // GeneratedCommit and GeneratedDirty are refreshed by go generate for normal
 // development builds.

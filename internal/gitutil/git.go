@@ -3,8 +3,11 @@ package gitutil
 import (
 	"bytes"
 	"fmt"
+	"os"
 	"os/exec"
 	"strings"
+
+	"github.com/pbk-b/awm/internal/output"
 )
 
 func IsRepo() bool { return exec.Command("git", "rev-parse", "--is-inside-work-tree").Run() == nil }
@@ -14,6 +17,17 @@ func Run(args ...string) error {
 	out, err := cmd.CombinedOutput()
 	if err != nil {
 		return fmt.Errorf("git %s failed: %v\n%s", strings.Join(args, " "), err, strings.TrimSpace(string(out)))
+	}
+	return nil
+}
+
+func RunPassthrough(operation string, args ...string) error {
+	cmd := exec.Command("git", args...)
+	cmd.Stdin = os.Stdin
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if err := cmd.Run(); err != nil {
+		return output.PassthroughFailure(output.Source{Operation: operation, Kind: "upstream", Name: "git", Command: "git", Args: args}, err)
 	}
 	return nil
 }

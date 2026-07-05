@@ -3,7 +3,7 @@ package cli
 import (
 	"fmt"
 
-	"awmcli/internal/version"
+	"github.com/pbk-b/awm/internal/version"
 )
 
 func cmdVersion(args []string) error {

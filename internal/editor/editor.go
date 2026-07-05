@@ -5,9 +5,9 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"strings"
 
-	"awmcli/internal/workspace"
+	"github.com/pbk-b/awm/internal/output"
+	"github.com/pbk-b/awm/internal/workspace"
 )
 
 type OpenOptions struct {
@@ -45,15 +45,9 @@ func OpenWithOptions(opts OpenOptions) error {
 		if name == "" {
 			name = filepath.Base(ed)
 		}
-		fmt.Fprintf(os.Stderr, "\nawm: output above was produced by editor %q and passed through unchanged\n", name)
-		return fmt.Errorf("awm open: editor %q failed while running %q: %w", name, commandString(ed, args), err)
+		return output.PassthroughFailure(output.Source{Operation: "open", Kind: "editor", Name: name, Command: ed, Args: args}, err)
 	}
 	return nil
-}
-
-func commandString(path string, args []string) string {
-	parts := append([]string{path}, args...)
-	return strings.Join(parts, " ")
 }
 
 func Detect(preferred string) (string, error) {

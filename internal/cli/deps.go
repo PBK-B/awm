@@ -7,8 +7,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"awmcli/internal/gitutil"
-	"awmcli/internal/workspace"
+	"github.com/pbk-b/awm/internal/gitutil"
+	"github.com/pbk-b/awm/internal/workspace"
 )
 
 func cmdAdd(args []string) error {
@@ -42,7 +42,7 @@ func cmdAdd(args []string) error {
 		gitArgs = append(gitArgs, "-b", *branch)
 	}
 	gitArgs = append(gitArgs, url, path)
-	if err := gitutil.Run(gitArgs...); err != nil {
+	if err := gitutil.RunPassthrough("add", gitArgs...); err != nil {
 		return err
 	}
 	m, err := workspace.ReadMetadata()

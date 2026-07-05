@@ -3,8 +3,8 @@ package cli
 import (
 	"fmt"
 
-	"awmcli/internal/editor"
-	"awmcli/internal/workspace"
+	"github.com/pbk-b/awm/internal/editor"
+	"github.com/pbk-b/awm/internal/workspace"
 )
 
 func cmdConfig(args []string) error {

@@ -1,6 +1,6 @@
 package workspace
 
-import "awmcli/internal/gitutil"
+import "github.com/pbk-b/awm/internal/gitutil"
 
 func RefreshLockEntry(name string, dep Dependency) error {
 	l, err := ReadLock()

@@ -8,10 +8,10 @@ import (
 	"path/filepath"
 	"strings"
 
-	"awmcli/internal/editor"
-	"awmcli/internal/gitutil"
-	"awmcli/internal/templates"
-	"awmcli/internal/workspace"
+	"github.com/pbk-b/awm/internal/editor"
+	"github.com/pbk-b/awm/internal/gitutil"
+	"github.com/pbk-b/awm/internal/templates"
+	"github.com/pbk-b/awm/internal/workspace"
 )
 
 func cmdInit(args []string) error {

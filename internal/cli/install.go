@@ -3,8 +3,8 @@ package cli
 import (
 	"fmt"
 
-	"awmcli/internal/gitutil"
-	"awmcli/internal/workspace"
+	"github.com/pbk-b/awm/internal/gitutil"
+	"github.com/pbk-b/awm/internal/workspace"
 )
 
 func cmdInstall(args []string) error {
