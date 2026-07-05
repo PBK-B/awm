@@ -1,0 +1,144 @@
+version: 2
+
+project_name: awm
+
+before:
+  hooks:
+    - go mod tidy
+    - go test ./...
+
+builds:
+  - id: awm
+    main: ./cmd/awm
+    binary: awm
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+      - linux
+      - windows
+      - freebsd
+      - openbsd
+      - netbsd
+    goarch:
+      - amd64
+      - arm64
+      - arm
+      - 386
+      - riscv64
+      - ppc64le
+      - s390x
+    goarm:
+      - "6"
+      - "7"
+    ignore:
+      - goos: darwin
+        goarch: 386
+      - goos: darwin
+        goarch: arm
+      - goos: darwin
+        goarch: riscv64
+      - goos: darwin
+        goarch: ppc64le
+      - goos: darwin
+        goarch: s390x
+      - goos: windows
+        goarch: riscv64
+      - goos: windows
+        goarch: ppc64le
+      - goos: windows
+        goarch: s390x
+      - goos: freebsd
+        goarch: riscv64
+      - goos: freebsd
+        goarch: ppc64le
+      - goos: freebsd
+        goarch: s390x
+      - goos: openbsd
+        goarch: riscv64
+      - goos: openbsd
+        goarch: ppc64le
+      - goos: openbsd
+        goarch: s390x
+      - goos: netbsd
+        goarch: riscv64
+      - goos: netbsd
+        goarch: ppc64le
+      - goos: netbsd
+        goarch: s390x
+    ldflags:
+      - -s -w
+      - -X github.com/pbk-b/awm/internal/version.Tag={{ .Tag }}
+      - -X github.com/pbk-b/awm/internal/version.Commit={{ .ShortCommit }}
+      - -X github.com/pbk-b/awm/internal/version.Dirty=false
+
+archives:
+  - id: awm
+    ids:
+      - awm
+    name_template: >-
+      {{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}
+    formats:
+      - tar.gz
+    format_overrides:
+      - goos: windows
+        formats:
+          - zip
+    files:
+      - README.md
+      - LICENSE*
+
+checksum:
+  name_template: checksums.txt
+  algorithm: sha256
+
+snapshot:
+  version_template: "{{ incpatch .Version }}-next"
+
+changelog:
+  use: github
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+      - "^chore:"
+      - "^ci:"
+      - "merge conflict"
+      - "Merge pull request"
+      - "Merge branch"
+  groups:
+    - title: Features
+      regexp: '^.*?feat(\(.+\))??!?:.+$'
+      order: 0
+    - title: Bug Fixes
+      regexp: '^.*?fix(\(.+\))??!?:.+$'
+      order: 1
+    - title: Performance
+      regexp: '^.*?perf(\(.+\))??!?:.+$'
+      order: 2
+    - title: Refactors
+      regexp: '^.*?refactor(\(.+\))??!?:.+$'
+      order: 3
+    - title: Other Changes
+      order: 999
+
+release:
+  github:
+    owner: pbk-b
+    name: awm
+  draft: true
+  prerelease: auto
+  mode: replace
+  header: |
+    ## awm {{ .Tag }}
+
+    Install with Go:
+
+    ```bash
+    go install github.com/pbk-b/awm/cmd/awm@{{ .Tag }}
+    ```
+
+    Or download a prebuilt archive below.
+  footer: |
+    **Full Changelog**: https://github.com/pbk-b/awm/compare/{{ .PreviousTag }}...{{ .Tag }}

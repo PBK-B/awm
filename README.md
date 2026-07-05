@@ -252,6 +252,26 @@ tools/genversion/     # go generate helper for development builds
 
 The project intentionally uses `internal/` for implementation packages so awm can evolve without exposing a public Go API. `cmd/awm` stays thin and only delegates to `internal/cli`.
 
+## Release
+
+Releases are built by GitHub Actions when a `v*` tag is pushed:
+
+```bash
+git tag v0.0.1
+git push origin v0.0.1
+```
+
+The release workflow uses GoReleaser to build archives for Linux, macOS, Windows, and BSD variants across common architectures including `amd64`, `arm64`, `arm`, `386`, `riscv64`, `ppc64le`, and `s390x` where supported by Go.
+
+GitHub Releases are created as drafts. The draft changelog is generated from commits between the previous tag and the current tag, grouped by conventional commit style prefixes such as `feat:`, `fix:`, `perf:`, and `refactor:`.
+
+Validate the release configuration locally if GoReleaser is installed:
+
+```bash
+goreleaser check
+make release-snapshot
+```
+
 ## Versioning
 
 `awm version` prints a SemVer-compatible version with a `v` prefix.
