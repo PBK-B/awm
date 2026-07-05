@@ -1,2 +1,6 @@
-awm
+/awm
 .DS_Store
+
+# awm local files
+.awm-metadata.local.json
+.agents/tmp/
