@@ -12,6 +12,14 @@ import (
 )
 
 func cmdAdd(args []string) error {
+	var gitPassthrough []string
+	for i, a := range args {
+		if a == "--" {
+			gitPassthrough = args[i+1:]
+			args = args[:i]
+			break
+		}
+	}
 	fs := flag.NewFlagSet("add", flag.ContinueOnError)
 	role := fs.String("role", "", "dependency role")
 	branch := fs.String("branch", "", "dependency branch")
@@ -37,10 +45,11 @@ func cmdAdd(args []string) error {
 	if workspace.Exists(path) {
 		return fmt.Errorf("dependency path already exists: %s", path)
 	}
-	gitArgs := []string{"submodule", "add"}
+	gitArgs := []string{"submodule", "add", "-f"}
 	if *branch != "" {
 		gitArgs = append(gitArgs, "-b", *branch)
 	}
+	gitArgs = append(gitArgs, gitPassthrough...)
 	gitArgs = append(gitArgs, url, path)
 	if err := gitutil.RunPassthrough("add", gitArgs...); err != nil {
 		return err

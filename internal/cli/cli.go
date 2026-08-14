@@ -44,7 +44,7 @@ func PrintUsage() {
 
 Usage:
   awm init [--name <name>] [--open] [--editor <editor>] [--yes]
-  awm add <url> [name] [--role <role>] [--branch <branch>] [--purpose <text>]
+  awm add <url> [name] [--role <role>] [--branch <branch>] [--purpose <text>] [-- git-args...]
   awm remove <name>
   awm list [--role <role>] [--json]
   awm info
