@@ -15,6 +15,9 @@ func cmdInstall(args []string) error {
 	if err != nil {
 		return err
 	}
+	if err := ensureGitExclude(); err != nil {
+		return err
+	}
 	if len(m.Dependencies) == 0 {
 		return workspace.WriteLock(workspace.DefaultLock(m.Name))
 	}

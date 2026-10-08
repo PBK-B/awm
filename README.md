@@ -95,8 +95,9 @@ awm status
 └── tmp/
 README.md
 AGENTS.md
-.gitignore
 ```
+
+It also adds local ignore rules to Git's `info/exclude` file without modifying the project's `.gitignore`.
 
 ## Metadata Files
 
@@ -108,7 +109,7 @@ AGENTS.md
 | `.awm-metadata.lock.json` | Resolved dependency lock state | Yes |
 | `.awm-metadata.local.json` | Local user overrides | No |
 
-`.awm-metadata.local.json` is added to `.gitignore` by `awm init`.
+`awm init` and `awm install` (or `awm restore`) add `.awm-metadata.local.json` and `.agents/tmp/` to Git's local `info/exclude` file. These rules are not committed or copied by cloning, so run `awm install` after cloning to restore them. Existing `.gitignore` rules are preserved; awm does not remove rules added by earlier versions.
 
 ## Dependency Management
 
@@ -245,7 +246,7 @@ internal/workspace/   # metadata, lock file, paths, dependency model
 internal/gitutil/     # git command wrapper and git state helpers
 internal/editor/      # editor detection and launch
 internal/output/      # user-facing output and passthrough error format
-internal/templates/   # generated README, AGENTS, gitignore templates
+internal/templates/   # generated README, AGENTS, patches README templates
 internal/version/     # version generation and formatting
 tools/genversion/     # go generate helper for development builds
 ```

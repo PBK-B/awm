@@ -52,31 +52,6 @@ func Agents(name string) string {
 `, name)
 }
 
-func Gitignore() string {
-	return `# awm local files
-.awm-metadata.local.json
-.agents/tmp/
-
-# local logs
-*.log
-data/*.log
-
-# macOS
-.DS_Store
-
-# editor
-.vscode/
-.idea/
-
-# local env
-.env
-.env.*
-
-# misc
-*.tmp
-`
-}
-
 func PatchesReadme() string {
 	return `# Patches
 

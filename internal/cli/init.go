@@ -104,32 +104,7 @@ func ensureInitFiles(name string) error {
 			}
 		}
 	}
-	return ensureGitignore()
-}
-
-func ensureGitignore() error {
-	if !workspace.Exists(workspace.GitignorePath) {
-		return os.WriteFile(workspace.GitignorePath, []byte(templates.Gitignore()), 0644)
-	}
-	b, err := os.ReadFile(workspace.GitignorePath)
-	if err != nil {
-		return err
-	}
-	s := string(b)
-	appendLines := []string{}
-	for _, line := range []string{workspace.LocalPath, workspace.TmpDir + "/"} {
-		if !strings.Contains(s, line) {
-			appendLines = append(appendLines, line)
-		}
-	}
-	if len(appendLines) == 0 {
-		return nil
-	}
-	if !strings.HasSuffix(s, "\n") {
-		s += "\n"
-	}
-	s += "\n# awm local files\n" + strings.Join(appendLines, "\n") + "\n"
-	return os.WriteFile(workspace.GitignorePath, []byte(s), 0644)
+	return ensureGitExclude()
 }
 
 func mustCwd() string {

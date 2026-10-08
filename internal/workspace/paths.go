@@ -12,7 +12,6 @@ const (
 	PatchesReadme = ".agents/patches/README.md"
 	ReadmeFile    = "README.md"
 	AgentsFile    = "AGENTS.md"
-	GitignorePath = ".gitignore"
 	Manager       = "git-submodule"
 	ModeAuto      = "auto"
 )
